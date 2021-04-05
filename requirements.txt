@@ -1,0 +1,7 @@
+dnspython
+pymongo
+flask
+flask-login
+bcrypt
+cryptography
+gunicorn==19.9.0

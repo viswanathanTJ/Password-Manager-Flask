@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <title>Password Manager</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/css/materialize.css" type="text/css" rel="stylesheet">
+  <link href="static/css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body class="auth" data-mode="auth">
+  <div class="section center-align">
+    <h1 class="auth-title grey-text text-darken-1">
+      <span class="blue-text text-lighten-1">Password</span>Manager</h1>
+    <div class="container">
+      <div class="row">
+        <div class="card col s10 offset-s1 z-depth-1">
+          <div class="card-content">
+          {% if reg %}
+              <form action="" method="post" name="register_form">                
+                <div class="notification red lighten-4 left-align error error--hidden"></div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="email" type="text" name="username" required />
+                    <label for="email">Username</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="password" type="password" name="password" required />
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="confirm" type="password" name="confirm" required />
+                    <label for="confirm">Confirm</label>
+                  </div>
+                  <div class="col s12 right-align">
+                    <a class="forgot-password teal-text" href="/">Already have an account?</a>
+                  </div>
+                  <div class="col s12">
+                    <button class="btn btn-large waves-effect waves-light blue" type="submit" name="action">Sign up</button>
+                  </div>
+                </div>
+              </form>
+          {% else %}
+              <form method="post" name="login_form">                
+                <div class="notification red lighten-4 left-align error error--hidden"></div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="email" type="text" name="username" required />
+                    <label for="email">Username</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="password" type="password" name="password" required />
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="col s12 right-align">
+                    <a class="forgot-password teal-text" href="register">Don't have an account?</a>
+                  </div>
+                  <div class="col s12">
+                    <button class="btn btn-large waves-effect waves-light blue" type="submit" name="action">Sign in</button>
+                  </div>
+                </div>
+              </form>
+{% endif %}          
+            </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- White Loading Spinner Template -->
+  <script type="text/html" id="loadingTemplateWhite">
+    <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script>
+    var baseUrl = "http://127.0.0.1:5000";
+    var csrf = "omlbaq4mm8e6.1f8ln4aaeirsp";
+    var settings = { "language": "en", "session_timeout": "86400", "show_category_badge": "1", "force_ssl": "0", "enable_2_step_verification": "0", "enable_activity_log": "1", "show_last_edit": "1" };
+  </script>
+  <!-- Include jQuery with local fallback -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>window.jQuery || document.write('<script src="static/js/jquery-3.3.1.min.js"><\/script>')</script>
+  
+  <!-- Scripts -->
+  <script src="static/js/materialize.js"></script>
+  <script src="static/js/velocity.min.js"></script>
+  <script src="static/js/velocity.ui.min.js"></script>
+  <script src="static/js/utils.js"></script>
+  <script src="static/js/functions.js"></script>
+  <script src="static/js/main.js"></script>
+  <script src="static/js/form.js"></script>
+  </body>
+</html>

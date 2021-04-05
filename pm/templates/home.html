@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <title>PassHub</title>
+
+  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
+  <link href="static/css/style.css" type="text/css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="static/images/favicon/android-chrome-192x192.png">
+  <link rel="manifest" href="static/images/favicon/manifest.json">
+  <link rel="mask-icon" href="static/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="static/images/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="static/images/favicon/mstile-144x144.png">
+  <meta name="msapplication-config" content="static/images/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body class="logins" data-mode="logins">
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#modal1" title="About" class="modal-trigger">About</a></li>
+    <li><a href="/edit">Edit Account</a></li>
+    <li class="divider"></li>
+    <li><a href="user/signout">Sign Out</a></li>
+  </ul>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4 class="grey-text"><span class="blue-text text-lighten-1">Password</span><span
+          class="grey-text text-darken-1">Manager</span></h4>
+      <p>You can store any type of secret contents here. No one can see your data except yourself. Strong Encryptions and hashes used for security.
+        You could access this data from anywhere at anytime with your password. For any reference or any improvements required feel free to contact me through my website.
+      </p>
+      <ul>
+        <li><strong>Website:</strong> <a target="_blank" href="http://viswa2k.tk">viswa2k.tk</a></li>
+      </ul>
+      <p>Thank you,<br>
+        viswa2k</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK!</a>
+    </div>
+  </div>
+  <nav class="light-blue lighten-1" style="display:none">
+    <div class="nav-wrapper container"><a id="logo-container" href="https://derekloewen.com:443/templates/passhub"
+        class="brand-logo light-blue-text text-lighten-5"><span class="white-text">Password</span>Manager</a>
+      <ul class="right hide-on-med-and-down">
+        <li class="active"><a href="/home">Logins</a></li>
+        <li class=""><a href="/categories">Categories</a></li>
+        <!-- Dropdown Trigger -->
+        <li><a class="dropdown-button account-button" href="#!" data-activates="dropdown1"
+            title="Manage your account"><i class="material-icons left">account_circle</i>{{username}}<i
+              class="material-icons account-dropdown-icon">arrow_drop_down</i></a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse text-white right"><i
+          class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <ul id="nav-mobile" class="side-nav">
+    <li class="active"><a href="https://derekloewen.com:443/templates/passhub/">Logins</a></li>
+    <li class=""><a href="https://derekloewen.com:443/templates/passhub/categories">Categories</a></li>
+    <li class="collapsible-parent">
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header"><i class="material-icons left">account_circle</i>Admin<i
+              class="material-icons right">arrow_drop_down</i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#modal1" title="PassHub Help" class="modal-trigger">Get Support</a></li>
+              <li><a href="/edit">Edit Account</a></li>
+              <li class="divider"></li>
+              <li><a href="/user/signout">Sign Out</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="container" id="searchForm" style="display:none">
+    <!-- Search Form -->
+  </div>
+
+  <div class="container">
+    <!-- Login Cards -->
+    <div class="section loginsList itemsList" id="loginsList">
+    </div>
+    <br><br>
+  </div>
+
+  <div class="fixed-action-btn" style="display: none;">
+    <a id="btnAddLogin" class="waves-effect waves-light btn-floating btn-large green darken-1">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
+  <!-- Search Form Template -->
+  <script type="text/html" id="searchTemplate">
+  <%
+    /* 
+    Pre-preocess categories to sort by "sorting" numbers.
+    */
+    sortedCategories = {};
+    $.each( categories, function( key, category ) {
+      sortedCategories[category.sorting] = category; 
+    });
+  %>
+  <div class="row">
+    <form class="col s12 m8 l6 offset-m2 offset-l3 center">
+      <div class="row">
+        <div class="input-field col s6 m6">
+          <input id="search" type="text" placeholder="Keyword" class="validate">
+          <label for="search">Search Logins</label>
+        </div>
+        <div class="input-field col s6 m6">
+          <select id="category" name="category">
+            <option value="0">All</option>
+            <% $.each( sortedCategories, function( key, category ) { %>
+              <option value="<%=category.id %>"><%=category.name %></option>
+            <% }); /* end each */ %>
+          </select>
+          <label>Category</label>
+        </div>
+      </div>
+    </form>
+  </div>
+</script>
+
+  <!-- Logins Cards Wrapper Template -->
+  <script type="text/html" id="loginsTemplate">
+  <%
+    /* 
+    Pre-preocess categories to sort by "sorting" numbers.
+    */
+    sortedCategories = {};
+    $.each( categories, function( key, category ) {
+      sortedCategories[category.sorting] = category; 
+    });
+  %>
+  <% $.each( logins, function( key, login ) { %>
+    <div class="row loginSingle itemSingle" data-login-id="<%=login.loginId%>">
+      <div class="col s12 m8 l6 offset-m2 offset-l3">
+        <div class="card hoverable">
+          <div class="card-content">
+            <!-- Title -->
+            <span class="card-title grey-text text-darken-4"><%=login.loginName%></span>
+            <a class="singleContextBtn dropdown-button btn-floating waves-effect waves-dark right z-depth-0" href="#" data-activates="loginContext<%=login.loginId%>"><i class="material-icons grey-text">more_vert</i></a>
+            <div class="card-content-inner">
+              <!-- Snippet and Forms -->
+              <%=tmpl('loginContentTemplate', {login: login, categories: sortedCategories})%>
+              <p class="meta">Last edited on <%= login.lastEditTime %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul id="loginContext<%=login.loginId%>" class="dropdown-content">
+        <li><a class="btnContext" data-action="edit" href="login/edit"><i class="material-icons left">edit</i>Edit</a></li>
+        <li><a class="btnContext" data-action="delete" href="login/delete"><i class="material-icons left">delete</i>Delete</a></li>
+      </ul>
+    </div>
+  <% }); /* end each */ %>
+</script>
+
+  <!-- Logins Card Content Template -->
+  <script type="text/html" id="loginContentTemplate">
+  <% var loginCategoryName; %>
+  <% $.each( categories, function( key, category ) { %>
+    <% if( category.id == login.loginCategoryId ) { loginCategoryName = category.name; return false; } %>
+  <% }); /* end each */ %>
+  <div class="snippet">
+    <span class="snippet-field">
+        <span class="snippet-field-value category-badge"><%= loginCategoryName %></span>
+    </span>
+    <% 
+      var i = 0; 
+      $.each( login.fields, function( key, field ) { 
+        var isURL = ( field.fieldValue.slice(0, 4) == 'http' ) ? true : false;
+        var fieldName = ( field.fieldName == '' ) ? 'Untitled' : field.fieldName;
+    %>
+      <span class="snippet-field">
+        <span class="grey-text snippet-field-label"><%=fieldName%>:</span> &nbsp;
+        <% if( isURL ) { /* URLs */ %>
+          <a class="snippet-field-value" target="_blank" href="<%=field.fieldValue%>" title="Click to jump to URL"><%=field.fieldValue%> <i class="material-icons tiny">open_in_new</i></a>
+        <% } else { /* Non-URLs */ %>  
+        <a class="copy-button snippet-field-value" href="#" data-clipboard-text="<%=field.fieldValue%>" title="Click to copy me">
+          <% if( field.fieldType == 'password' ) { %>
+            <%=passwordMask(field.fieldValue)%>
+          <% } else { %>
+            <%=field.fieldValue%>
+          <% } %>
+        </a>
+        <% } %>
+        <% if( field.fieldType == 'password' ) { %>
+          <button class="z-depth-0 grey-text btn" data-action="showPassword">show</button>
+        <% } %>
+        <% if( ! isURL && field.fieldType != 'password' ) { %>
+          <button class="z-depth-0 grey-text btn" data-action="select">select</button>
+        <% } %>
+      </span>
+    <% i++ }); /* end each */ %>
+  </div>
+  <div class="edit-form" style="display:none">
+    <form action="login/<%=login.loginId%>" method="post">
+      <div class="row">
+        <div class="select-wrap col s12">
+          <label>Category</label>
+          <select name="category" class="browser-default">
+            <% $.each( categories, function( key, category ) { %>
+              <option value="<%=category.id%>" <%=category.id == login.loginCategoryId ? 'selected="selected"':''%>><%=category.name%></option>
+            <% }); /* end each */ %>
+          </select>
+        </div>
+        <div class="fields-wrapper">
+          <%=tmpl('fieldTemplate', { fields: login.fields })%>
+        </div>
+        <div class="col s12 right-align">
+          <button type="button" class="btnCancel z-depth-0 btn waves-effect waves-dark white lighten-2 grey-text text-darken-2">Close</button>
+          <button class="btnSave z-depth-0 btn waves-effect waves-light">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="delete-form" style="display:none">
+    <div class="row">
+      <div class="col s12">
+        <p>Delete this login permanently?</p>
+        <br>
+      </div>
+      <div class="col s12 right-align">
+        <button type="button" class="btnCancel z-depth-0 btn waves-effect waves-dark white lighten-2 grey-text text-darken-2">Cancel</button>
+        <button type="button" class="btnDelete z-depth-0 btn red waves-effect waves-light" >Confirm</button>
+      </div>
+    </div>
+  </div>
+</script>
+
+  <!-- Field Template -->
+  <script type="text/html" id="fieldTemplate">
+  <% $.each( fields, function( key, field ) { %>
+    <% var fieldName = ( field.fieldName == '' ) ? 'Untitled' : field.fieldName; %>
+    <div class="input-field <%=field.fieldType%> col s12" data-field-index="<%=field.fieldId%>">
+      <% if ( field.fieldType == 'text' || field.fieldType == 'password' ) { %>
+        <input type="<%=field.fieldType%>" name="<%=field.fieldId%>" value="<%=field.fieldValue%>" placeholder=" ">
+      <% } else { %>
+        <textarea class="materialize-textarea" name="<%=field.fieldId%>"><%=field.fieldValue%></textarea>
+      <% } %>
+      <label class="active" contentEditable="true"><%=fieldName%></label>
+      <div class="actions">
+        <% if ( field.fieldType == 'password' ) { %>
+          <button 
+            type="button"
+            class="z-depth-0 grey-text white btn tooltipped" 
+            data-action="showPassword" 
+            data-position="bottom" 
+            data-tooltip="show password"
+          ><i class="material-icons">visibility</i></button>
+          <button 
+            type="button"
+            class="z-depth-0 grey-text white btn tooltipped" 
+            data-action="generatePassword" 
+            data-position="bottom" 
+            data-tooltip="generate new password"
+          ><i class="material-icons">settings</i></button>
+        <% } /* end if */ %>
+        <button 
+          type="button"
+          class="z-depth-0 grey-text white btn tooltipped" 
+          data-action="deleteField" 
+          data-position="bottom" 
+          data-tooltip="delete field"
+        ><i class="material-icons">remove_circle</i></button>
+        <button 
+          type="button"
+          class="z-depth-0 grey-text white btn tooltipped" 
+          data-action="addField" 
+          data-position="bottom" 
+          data-tooltip="add new field below"
+        ><i class="material-icons">add_circle</i></button>
+        <span 
+          class="reorderHandle z-depth-0 grey-text white btn" 
+          data-action="reorderField"
+        ><i class="material-icons">reorder</i></span>
+      </div>
+      <ul class="field-type-picker">
+        <li><a class="z-depth-0 btn" data-type="text">Text</a></li>
+        <li><a class="z-depth-0 btn" data-type="textarea">Textarea</a></li>
+        <li><a class="z-depth-0 btn" data-type="password">Password</a></li>
+      </ul>
+    </div>
+  <% }); /* end each */ %>
+</script>
+
+  <!-- Templates -->
+  <!-- White Loading Spinner -->
+  <script type="text/html" id="loadingTemplateWhite">
+    <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-white-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <!-- Scripts -->
+  <script>
+    var baseUrl = "http://127.0.0.1:5000";
+    var csrf = "omlbaq4mm8e6.1f8ln4aaeirsp";
+    var settings = { "language": "en", "session_timeout": "86400", "show_category_badge": "1", "force_ssl": "0", "enable_2_step_verification": "0", "enable_activity_log": "1", "show_last_edit": "1" };
+    // Store notification translation strings for JS
+    var language = {
+      notification_categories_delete_failed: 'Error: failed to delete categories',
+      notification_no_categories_found: 'Error: no categories found',
+      notification_login_saved: 'Login saved',
+      notification_login_save_failed: 'Error: failed to update login',
+      notification_fields_delete_failed: 'Error: failed to delete fields',
+      notification_copied: 'Copied to clipboard',
+      notification_wont_delete_admin: 'You can not delete the admin nor user group.',
+      notification_definite_article: 'The',
+      notification_group_delete_info: 'group will be deleted if you hit save. You may re-assign users to a group on the Users page.',
+      notification_group_delete_confirm: 'You are about to delete this group. Associated users will need to be re-assigned to a new group on the "Users" page. Go ahead anyway?',
+      notification_groups_saved: 'Groups saved',
+      notification_groups_save_failed: 'Error: failed to update groups',
+      notification_groups_delete_failed: 'Error: failed to delete groups',
+      notification_password_reminder: 'Make sure to store the password in a safe place before saving!',
+      notification_delete_account_confirm: 'Delete your account permanently?',
+      notification_user_saved: 'User saved',
+      notification_account_saved: 'Account saved',
+      notification_user_save_failed: 'Error: failed to update user.',
+      notification_settings_saved: 'Settings saved',
+      notification_settings_save_failed: 'Error: failed to update settings',
+      notification_negative: 'No',
+      notification_found_verb: 'found',
+      notification_no_logins: 'No logins found, get started by creating one!',
+      search_no_match: 'No matches',
+      search_for: 'for',
+      search_in: 'in',
+      notification_no_access: 'You do not have access to this category.',
+      notification_logins_load_failed: 'Failed to load logins.',
+      notification_categories_save_failed: 'Error: failed to update categories',
+      notification_categories_saved: 'Categories saved',
+      notification_delete_failed: 'Error: failed to delete',
+      notification_delete_past_tense: 'deleted',
+      notification_delete_last_user_confirm: 'If you delete the last user you will not be able to log in. Go ahead anyway?',
+    };
+  </script>
+  <!-- Include jQuery with local fallback -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>window.jQuery || document.write('<script src="static/js/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="static/js/materialize.min.js"></script>
+  <script src="static/js/velocity.min.js"></script>
+  <script src="static/js/velocity.ui.min.js"></script>
+  <script src="static/js/utils.js"></script>
+  <script src="static/js/jquery.fn.sortable.js"></script>
+  <script src="static/js/underscore.min.js"></script>
+  <script src="static/js/functions.js"></script>
+  <script src="static/js/main.js"></script>
+
+</body>
+
+</html>
