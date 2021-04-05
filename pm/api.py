@@ -26,14 +26,14 @@ class AUTH:
         confirm = str(request.form.get('confirm'))
         # Verify inputs
         if username == "" and password == "" and confirm == "":
-            if password != confirm:
-                return jsonify({"error": "Password mismatch"}), 400
             return jsonify({"error": "Enter all fields"}), 400
+        if password != confirm:
+            return jsonify({"error": "Password mismatch"}), 400
         # Encrypt the password
         passwd = password.encode()
         hashed = bcrypt.hashpw(passwd, bcrypt.gensalt())
         print('Hashed credentials')
-        # Check for existing email address
+        # Check for existing user
         if username in client.list_database_names():
             return jsonify({"error": "Name already in use"}), 400
 
@@ -58,6 +58,9 @@ class AUTH:
         if username == "" and password == "":
             return jsonify({"error": "Enter both fields"}), 400
 
+        # Check for existing user
+        if username not in client.list_database_names():
+            return jsonify({"error": "Username does not exists"}), 400
         db = client[username]
         if db:
             print('User exist')
