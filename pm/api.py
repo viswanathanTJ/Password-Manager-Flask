@@ -26,14 +26,14 @@ class AUTH:
         confirm = str(request.form.get('confirm'))
         # Verify inputs
         if username == "" and password == "" and confirm == "":
+            if password != confirm:
+                return jsonify({"error": "Password mismatch"}), 400
             return jsonify({"error": "Enter all fields"}), 400
-        if password != confirm:
-            return jsonify({"error": "Password mismatch"}), 400
         # Encrypt the password
         passwd = password.encode()
         hashed = bcrypt.hashpw(passwd, bcrypt.gensalt())
         print('Hashed credentials')
-        # Check for existing user
+        # Check for existing email address
         if username in client.list_database_names():
             return jsonify({"error": "Name already in use"}), 400
 
@@ -58,9 +58,6 @@ class AUTH:
         if username == "" and password == "":
             return jsonify({"error": "Enter both fields"}), 400
 
-        # Check for existing user
-        if username not in client.list_database_names():
-            return jsonify({"error": "Username does not exists"}), 400
         db = client[username]
         if db:
             print('User exist')
@@ -82,7 +79,6 @@ class AUTH:
 
 
 class APIs:
-    category = {}
     logins = {}
     login_saved = {}
 
@@ -90,17 +86,17 @@ class APIs:
         db = client[session['username']]
         collection = db.cred
         cursor = collection.find({})
-        restore_cat = {}
+        category = {}
         for i in cursor:
             for x in i:
-                restore_cat.update(i)
-        restore_cat.pop('_id')
-        restore_cat.pop('password')
-        APIs.category = restore_cat
+                category.update(i)
+        category.pop('_id')
+        category.pop('password')
+        return category
 
     def returnAll():
-        APIs.getAll()
-        return APIs.category
+        category = APIs.getAll()
+        return category
 
     def save():
         data = request.form
@@ -121,17 +117,15 @@ class APIs:
     def send_saved(uid):
         print('Sending')
         print(APIs.login_saved)
-        APIs.getAll()
-        logins = {'logins': APIs.login_saved, 'categories': APIs.category}
+        category = APIs.getAll()
+        logins = {'logins': APIs.login_saved, 'categories': category}
         print('Logins are')
         print(logins)
         return logins
 
     def get_logins():
         d = request.form
-        print(d)
-        APIs.getAll()
-        cat = APIs.category
+        cat = APIs.getAll()
         try:
             query = d['keyword']
             cid = d['categoryId']
@@ -198,7 +192,7 @@ class APIs:
         collection = db.db
         logins_dict = add_login.get_loginss(collection, session['key'])
         APIs.getAll()
-        data = {"categories": APIs.category}
+        data = {"categories": cat}
         print(logins_dict)
         if logins_dict:
             data.update(logins_dict)
@@ -212,8 +206,8 @@ class APIs:
         return jsonify({})
 
     def categories_data():
-        APIs.getAll()
-        return APIs.category
+        category = APIs.getAll()
+        return category
 
     def categories_delete():
         d = request.form

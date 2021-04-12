@@ -1,5 +1,7 @@
 from pprint import pprint
 import uuid
+
+import pytz
 from functions.enc import encryptor
 from functions.dec import decryptor
 from datetime import datetime
@@ -31,8 +33,8 @@ skel = {}
 
 
 def add_login(data, key):
-    datenow = datetime.today()
-    print(data)
+    dt=datetime.utcnow().replace(tzinfo=pytz.UTC)
+    date_crct=dt.astimezone(pytz.timezone("Asia/Kolkata"))
     eid = data['loginData[loginId]']
     if eid:
         uid = eid
@@ -43,7 +45,7 @@ def add_login(data, key):
     skel['loginName'] = data['loginData[loginName]']
     skel['loginCategoryId'] = data['loginData[loginCategoryId]']
     print('Cat id', skel['loginCategoryId'])
-    skel['lastEditTime'] = datenow.strftime("%b %d, %Y" + " at " + "%I:%M %p")
+    skel['lastEditTime'] = date_crct.strftime("%b %d, %Y" + " at " + "%I:%M %p")
     enc = skel.copy()
     field_list = []
     field_list_enc = []
