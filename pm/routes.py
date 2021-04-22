@@ -23,13 +23,13 @@ def login_required(f):
 @routes.route('/', methods=['GET'])
 def auth():
   session.clear()
-  reg = False
+  reg = True
   return render_template('auth.html', reg=reg)
 
 @routes.route('/register', methods=['GET'])
 def register():
   session.clear()
-  reg=True
+  reg=False
   return render_template('auth.html', reg=reg)
 
 @routes.route('/edit', methods=['GET', 'POST'])
