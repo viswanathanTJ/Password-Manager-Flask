@@ -1,40 +1,16 @@
-from pprint import pprint
 import uuid
-
+from flask.globals import session
 import pytz
 from functions.enc import encryptor
 from functions.dec import decryptor
 from datetime import datetime
-logins_skel = {
-    "logins": [
-        {
-            "loginId": "0",
-            "loginName": "Email",
-            "loginCategoryId": "1",
-            "lastEditTime": "Feb 19, 2019 at 10:03 PM",
-            "fields": [
-                {
-                    "fieldId": "0",
-                    "fieldName": "Username",
-                    "fieldValue": "user@mail.com",
-                    "fieldType": "text"
-                },
-                {
-                    "fieldId": "1",
-                    "fieldName": "Password",
-                    "fieldValue": "0%vbTzzT2X",
-                    "fieldType": "password"
-                }
-            ]
-        }
-    ]
-}
+
 skel = {}
 
 
 def add_login(data, key):
-    dt=datetime.utcnow().replace(tzinfo=pytz.UTC)
-    date_crct=dt.astimezone(pytz.timezone("Asia/Kolkata"))
+    dt = datetime.utcnow().replace(tzinfo=pytz.UTC)
+    date_crct = dt.astimezone(pytz.timezone("Asia/Kolkata"))
     eid = data['loginData[loginId]']
     if eid:
         uid = eid
@@ -42,21 +18,19 @@ def add_login(data, key):
         uid = uuid.uuid1().hex
     skel['_id'] = uid
     skel['loginId'] = uid
-    skel['loginName'] = data['loginData[loginName]']
+    skel['loginName'] = encryptor(data['loginData[loginName]'], key)
     skel['loginCategoryId'] = data['loginData[loginCategoryId]']
-    print('Cat id', skel['loginCategoryId'])
-    skel['lastEditTime'] = date_crct.strftime("%b %d, %Y" + " at " + "%I:%M %p")
+    skel['lastEditTime'] = encryptor(date_crct.strftime(
+        "%b %d, %Y" + " at " + "%I:%M %p"), key)
     enc = skel.copy()
     field_list = []
     field_list_enc = []
     length = int((len(data)-4)/5)
-    print('Length of fields', length)
     for i in range(0, length+1):
         name = 'fieldData['+str(i)+'][fieldName]'
         fieldName_enc = encryptor(data[name], key)
         fieldName = data[name]
         value = 'fieldData['+str(i)+'][fieldValue]'
-        print(data[value])
         fieldValue_enc = encryptor(data[value], key)
         fieldValue = data[value]
         typ = 'fieldData['+str(i)+'][fieldType]'
@@ -78,7 +52,6 @@ def add_login(data, key):
 def get_loginss(db, key):
     cursor = db.find()
     docs = []
-    print(key, type(key))
 
     for i in cursor:
         docs.append(i)
@@ -90,22 +63,17 @@ def get_loginss(db, key):
     for i in range(0, len(docs)):
         ele = docs[i]
         dict_login['loginId'] = ele['loginId']
-        dict_login['loginName'] = ele['loginName']
+        dict_login['loginName'] = decryptor(ele['loginName'], key)
         dict_login['loginCategoryId'] = ele['loginCategoryId']
-        dict_login['lastEditTime'] = ele['lastEditTime']
-        print(ele['lastEditTime'])
+        dict_login['lastEditTime'] = decryptor(ele['lastEditTime'], key)
         logins['logins'].append(dict_login)
         dict_login = {}
         logins['logins'][i]['fields'] = []
         for x in ele['fields']:
-            # dict_fields['fieldName'] = x['fieldName']
-            # dict_fields['fieldValue'] = x['fieldValue']
-            # dict_fields['fieldType'] = x['fieldType']
             dict_fields['fieldName'] = decryptor(x['fieldName'], key)
             dict_fields['fieldValue'] = decryptor(x['fieldValue'], key)
             dict_fields['fieldType'] = decryptor(x['fieldType'], key)
             logins['logins'][i]['fields'].append(dict_fields)
             dict_fields = {}
         logins['logins'].reverse()
-    # pprint(logins)
     return logins

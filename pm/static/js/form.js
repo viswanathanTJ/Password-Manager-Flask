@@ -68,3 +68,30 @@ $("form[name=register_form]").submit(function (e) {
   });
   e.preventDefault();
 });
+
+$("form[name=edit_form]").submit(function (e) {
+
+  var $form = $(this);
+  var $success = $form.find(".success");
+  var $error = $form.find(".error");
+  var data = $form.serialize();
+  $.ajax({
+    url: "/user/edit",
+    type: "POST",
+    data: data,
+    dataType: "json",
+    success: function (resp) {
+        $icon = '<i class="material-icons left icon">check_circle</i><p>'
+        $success.html($icon+"Successfully Updated</p>").removeClass("error--hidden");
+        $('.btn').prop('disabled', false);
+        $('.btn').text('Submit');   
+    },
+    error: function (resp) {   
+        $icon = '<i class="material-icons left icon">error</i><p>'
+        $error.html($icon+resp.responseJSON.error+"</p>").removeClass("error--hidden");
+        $('.btn').prop('disabled', false);
+        $('.btn').text('Submit');    
+    }
+  });
+  e.preventDefault();
+});

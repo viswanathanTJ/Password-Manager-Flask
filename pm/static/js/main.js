@@ -974,10 +974,6 @@ jQuery(function($){
   // =============================================================================================
   // Settings page
   // =============================================================================================
-  
-  if( PassHub.mode == 'settings' ) {
-
-    Materialize.toast('<i class="material-icons left">error_outline</i> Managing settings is disabled in this demo', 4000);
 
     // Transition in title
     $('#title').velocity("transition.slideUpIn", "easeOutExpo");
@@ -1000,27 +996,9 @@ jQuery(function($){
 
       // Insert loading indicator
       setButtonLoadingIndicator(true, saveButtonEl);
-
-      // Submit updated field data with AJAX
-      var jqxhr = $.post(baseUrl + '/settings/save/', {fieldData: fieldData, csrf: PassHub.csrf}, function(data) { 
-        Materialize.toast(language.notification_settings_saved, 4000);
-      })
-        .always(function() {
-          // Save button return to normal state
-          setButtonLoadingIndicator(false, saveButtonEl);
-        })
-        .fail(function() {
-          console.log(jqxhr.statusText);
-          if(jqxhr.responseText != '') {
-            PassHub.error = jqxhr.responseText;
-          } else {
-            PassHub.error = language.notification_settings_save_failed;
-          }
-          Materialize.toast(PassHub.error, 4000);
-        });
+      
 
     });
 
-  } // end settings page
 
 }); // end of document ready

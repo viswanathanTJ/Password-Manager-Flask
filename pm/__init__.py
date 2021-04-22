@@ -14,15 +14,3 @@ def create_app():
     
     return app
 
-categories_skel = {
-    "1": {
-        "id": "1",
-        "sorting": "1",
-        "name": "General"
-    },
-    "2": {
-        "id": "2",
-        "sorting": "2",
-        "name": "My Logins"
-    }
-}

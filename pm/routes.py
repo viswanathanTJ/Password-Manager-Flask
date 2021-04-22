@@ -23,34 +23,35 @@ def login_required(f):
 @routes.route('/', methods=['GET'])
 def auth():
   session.clear()
-  reg = True
+  reg = False
   return render_template('auth.html', reg=reg)
 
-@routes.route('/signin', methods=['GET'])
+@routes.route('/register', methods=['GET'])
 def register():
   session.clear()
-  reg=False
+  reg=True
   return render_template('auth.html', reg=reg)
 
-@routes.route('/edit', methods=['GET'])
+@routes.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
-  return render_template('edit.html')
+  username = session['username']
+  return render_template('edit.html', username=username)
 
 
 # AUTHENTICATION
 @routes.route('/user/register', methods=['POST'])
-def gotoSignup():
+def signup():
     return AUTH.signup()
     
 @routes.route('/user/signout', methods=['GET','POST'])
 @login_required
-def gotoSignOut():
+def signout():
     session.clear()
     return AUTH.signout()
 
 @routes.route('/user/login', methods=['GET', 'POST'])
-def gotoSignIn():
+def login():
     return AUTH.login()
 
 @routes.route('/user/edit', methods=['GET', 'POST'])
@@ -66,39 +67,33 @@ def home():
 
 @routes.route('/categories', methods=['GET', 'POST'])
 @login_required
-def categiries():
+def categories():
     username = session['username']
     return render_template('categories.html', username=username)
 
-
+@routes.route('/categories/get', methods=['GET', 'POST'])
 @routes.route('/categorieswithprivate/get', methods=['GET', 'POST'])
-def classReturnAll():
-    return APIs.returnAll()
+def returnCategories():
+    return APIs.returnCategories()
 
 @routes.route('/logins/save', methods=['POST'])
-def classSave():
-    return APIs.save()
+def addLogin():
+    return APIs.addLogin()
 
-@routes.route('/logins/<name>', methods=['GET', 'POST'])
-def classGetLogin(name):
-    return APIs.send_saved(name)
+@routes.route('/logins/<id>', methods=['GET', 'POST'])
+def send_saved(id):
+    return APIs.send_saved(id)
 
 @routes.route('/logins/get', methods=['GET', 'POST'])
-def classGetCategories():
+def get_logins():
     return APIs.get_logins()
 
 @routes.route('/logins/delete/<uid>', methods=['GET', 'POST'])
 def deleteLogin(uid):
     return APIs.delete_login(uid)
 
-@routes.route('/categories/get', methods=['GET', 'POST'])
-def classGetCategoriesData():
-    return APIs.categories_data()
 
 @routes.route('/categories/delete', methods=['GET', 'POST'])
-def deleteCategoriesData():
-    return APIs.cat_save()
-
 @routes.route('/categories/save/', methods=['GET', 'POST'])
 def classCatSave():
-    return APIs.cat_save()
+    return APIs.category_modify()
