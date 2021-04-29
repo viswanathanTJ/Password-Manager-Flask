@@ -110,41 +110,42 @@
           <div class="card hoverable">
             <div class="card-content">
               <!-- Content -->
-                  <div class="row">
-                      <div class="card-content">
-                        <form action="" method="post" name="edit_form">
-                          <div class="notification green lighten-4 left-align success error--hidden"></div>
-                          <div class="notification red lighten-4 left-align error error--hidden"></div>
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <input id="current" type="text" name="current" required />
-                              <label for="current">Current Password</label>
-                            </div>
-                            <div class="input-field col s12">
-                              <input id="password" type="password" name="password" required />
-                              <label for="password">New Password</label>
-                            </div>
-                            <div class="input-field col s12">
-                              <input id="confirm" type="password" name="confirm" required />
-                              <label for="confirm">Confirm Password</label>
-                            </div>
-                            <div class="col s12">
-                              <button class="btn btn-large right-align waves-effect waves-light blue" type="submit" name="action">Submit</button>
-                            </div>
-                          </div>
-
-                        </form>
+              <div class="row">
+                <div class="card-content">
+                  <form action="" method="post" name="edit_form">
+                    <div class="notification green lighten-4 left-align success error--hidden"></div>
+                    <div class="notification red lighten-4 left-align error error--hidden"></div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="current" type="text" name="current" required />
+                        <label for="current">Current Password</label>
+                      </div>
+                      <div class="input-field col s12">
+                        <input id="password" type="password" name="password" required />
+                        <label for="password">New Password</label>
+                      </div>
+                      <div class="input-field col s12">
+                        <input id="confirm" type="password" name="confirm" required />
+                        <label for="confirm">Confirm Password</label>
+                      </div>
+                      <div class="col s12">
+                        <button class="btn btn-large right-align waves-effect waves-light blue" type="submit"
+                          name="action">Submit</button>
                       </div>
                     </div>
-                  </div>
-                  </div>
-                  </div>
-                  </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
-        <!-- Templates -->
-        <!-- White Loading Spinner -->
-    <script type="text/html" id="loadingTemplateWhite">
+      <!-- Templates -->
+      <!-- White Loading Spinner -->
+      <script type="text/html" id="loadingTemplateWhite">
     <div class="preloader-wrapper small active">
       <div class="spinner-layer spinner-white-only">
         <div class="circle-clipper left">
@@ -158,60 +159,60 @@
     </div>
   </script>
 
-        <!-- Scripts -->
-        <script>
-          var baseUrl = "https://viswa2k.herokuapp.com";
-          var csrf = "omlbaq4mm8e6.12en251mdpetv";
-          var settings = { "language": "en", "session_timeout": "86400", "show_category_badge": "1", "force_ssl": "0", "enable_2_step_verification": "0", "enable_activity_log": "1", "show_last_edit": "1" };
-          // Store notification translation strings for JS
-          var language = {
-            notification_categories_delete_failed: 'Error: failed to delete categories',
-            notification_no_categories_found: 'Error: no categories found',
-            notification_login_saved: 'Login saved',
-            notification_login_save_failed: 'Error: failed to update login',
-            notification_fields_delete_failed: 'Error: failed to delete fields',
-            notification_copied: 'Copied to clipboard',
-            notification_wont_delete_admin: 'You can not delete the admin nor user group.',
-            notification_definite_article: 'The',
-            notification_group_delete_info: 'group will be deleted if you hit save. You may re-assign users to a group on the Users page.',
-            notification_group_delete_confirm: 'You are about to delete this group. Associated users will need to be re-assigned to a new group on the "Users" page. Go ahead anyway?',
-            notification_groups_saved: 'Groups saved',
-            notification_groups_save_failed: 'Error: failed to update groups',
-            notification_groups_delete_failed: 'Error: failed to delete groups',
-            notification_password_reminder: 'Make sure to store the password in a safe place before saving!',
-            notification_delete_account_confirm: 'Delete your account permanently?',
-            notification_user_saved: 'User saved',
-            notification_account_saved: 'Account saved',
-            notification_user_save_failed: 'Error: failed to update user.',
-            notification_settings_saved: 'Settings saved',
-            notification_settings_save_failed: 'Error: failed to update settings',
-            notification_negative: 'No',
-            notification_found_verb: 'found',
-            notification_no_logins: 'No logins found, get started by creating one!',
-            search_no_match: 'No matches',
-            search_for: 'for',
-            search_in: 'in',
-            notification_no_access: 'You do not have access to this category.',
-            notification_logins_load_failed: 'Failed to load logins.',
-            notification_categories_save_failed: 'Error: failed to update categories',
-            notification_categories_saved: 'Categories saved',
-            notification_delete_failed: 'Error: failed to delete',
-            notification_delete_past_tense: 'deleted',
-            notification_delete_last_user_confirm: 'If you delete the last user you will not be able to log in. Go ahead anyway?',
-          };
-        </script>
-        <!-- Include jQuery with local fallback -->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>window.jQuery || document.write('<script src="static/js/jquery-3.3.1.min.js"><\/script>')</script>
-        <script src="static/js/materialize.min.js"></script>
-        <script src="static/js/velocity.min.js"></script>
-        <script src="static/js/velocity.ui.min.js"></script>
-        <script src="static/js/utils.js"></script>
-        <script src="static/js/jquery.fn.sortable.js"></script>
-        <script src="static/js/underscore.min.js"></script>
-        <script src="static/js/functions.js"></script>
-        <script src="static/js/form.js"></script>
-        <script src="static/js/main.js"></script>
+      <!-- Scripts -->
+      <script>
+        var baseUrl = "https://viswa-2k.herokuapp.com";
+        var csrf = "omlbaq4mm8e6.12en251mdpetv";
+        var settings = { "language": "en", "session_timeout": "86400", "show_category_badge": "1", "force_ssl": "0", "enable_2_step_verification": "0", "enable_activity_log": "1", "show_last_edit": "1" };
+        // Store notification translation strings for JS
+        var language = {
+          notification_categories_delete_failed: 'Error: failed to delete categories',
+          notification_no_categories_found: 'Error: no categories found',
+          notification_login_saved: 'Login saved',
+          notification_login_save_failed: 'Error: failed to update login',
+          notification_fields_delete_failed: 'Error: failed to delete fields',
+          notification_copied: 'Copied to clipboard',
+          notification_wont_delete_admin: 'You can not delete the admin nor user group.',
+          notification_definite_article: 'The',
+          notification_group_delete_info: 'group will be deleted if you hit save. You may re-assign users to a group on the Users page.',
+          notification_group_delete_confirm: 'You are about to delete this group. Associated users will need to be re-assigned to a new group on the "Users" page. Go ahead anyway?',
+          notification_groups_saved: 'Groups saved',
+          notification_groups_save_failed: 'Error: failed to update groups',
+          notification_groups_delete_failed: 'Error: failed to delete groups',
+          notification_password_reminder: 'Make sure to store the password in a safe place before saving!',
+          notification_delete_account_confirm: 'Delete your account permanently?',
+          notification_user_saved: 'User saved',
+          notification_account_saved: 'Account saved',
+          notification_user_save_failed: 'Error: failed to update user.',
+          notification_settings_saved: 'Settings saved',
+          notification_settings_save_failed: 'Error: failed to update settings',
+          notification_negative: 'No',
+          notification_found_verb: 'found',
+          notification_no_logins: 'No logins found, get started by creating one!',
+          search_no_match: 'No matches',
+          search_for: 'for',
+          search_in: 'in',
+          notification_no_access: 'You do not have access to this category.',
+          notification_logins_load_failed: 'Failed to load logins.',
+          notification_categories_save_failed: 'Error: failed to update categories',
+          notification_categories_saved: 'Categories saved',
+          notification_delete_failed: 'Error: failed to delete',
+          notification_delete_past_tense: 'deleted',
+          notification_delete_last_user_confirm: 'If you delete the last user you will not be able to log in. Go ahead anyway?',
+        };
+      </script>
+      <!-- Include jQuery with local fallback -->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script>window.jQuery || document.write('<script src="static/js/jquery-3.3.1.min.js"><\/script>')</script>
+      <script src="static/js/materialize.min.js"></script>
+      <script src="static/js/velocity.min.js"></script>
+      <script src="static/js/velocity.ui.min.js"></script>
+      <script src="static/js/utils.js"></script>
+      <script src="static/js/jquery.fn.sortable.js"></script>
+      <script src="static/js/underscore.min.js"></script>
+      <script src="static/js/functions.js"></script>
+      <script src="static/js/form.js"></script>
+      <script src="static/js/main.js"></script>
 
 </body>
 
