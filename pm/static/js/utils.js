@@ -1,10 +1,3 @@
-/*
- * Plugins, libraries, and helper functions
- */
-
-// Simple JavaScript Templating
-// John Resig - http://ejohn.org/ - MIT Licensed
-// http://ejohn.org/blog/javascript-micro-templating/
 (function(){
   var cache = {};
  
@@ -40,7 +33,6 @@
 })();
 
 // Slugify a string
-// https://gist.github.com/mathewbyrne/1280286
 function slugify(text)
 {
   return text.toString().toLowerCase()
@@ -52,7 +44,6 @@ function slugify(text)
 }
 
 // Convert lowercase slug to capitalized and spaced text
-// http://stackoverflow.com/a/8980902/1178501
 function titleize(text) {
   return text.replace(/-/g, " ").replace(/\b[a-z]/g, function () {
       return arguments[0].toUpperCase();
@@ -65,7 +56,6 @@ function passwordMask(text) {
 
 // clip-j
 // A Flash free clipboard implementation.
-// https://github.com/Triforcey/clip-j
 function clip(text) {
   var copyElement = document.createElement('input');
   copyElement.setAttribute('type', 'text');
@@ -87,7 +77,6 @@ function clip(text) {
 
 // Get number of items in an object
 // example: var size = Object.size(myArray);
-// http://stackoverflow.com/a/6700/1178501
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -113,7 +102,6 @@ function selectText(el) {
 }
 
 // Change HTML element type jQuery plugin
-// http://stackoverflow.com/a/8584217/1178501
 (function($) {
     $.fn.changeElementType = function(newType) {
         var attrs = {};
@@ -127,24 +115,5 @@ function selectText(el) {
         });
     };
 })(jQuery);
-
-/*
- * Jen is a portable password generator using cryptographic approach
- * Copyright (C) 2015  Michael VERGOZ @mykiimike
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- */
 
 "use strict";function JenFailsafe(){}function Jen(t){return this instanceof Jen?(this.hardened=t&&1==t?t:!1,this.dump=new Uint8Array(256),this.mode="",this.version="1.0.5-dev",void(1==_serverSide?(this.crypto=require("crypto"),this.mode="NodeJS CryptoAPI"):(this.crypto=window.crypto||window.msCrypto,window.crypto?(this.mode="W3C CryptoAPI",this.crypto=window.crypto):window.msCrypto&&(this.mode="Microsoft CryptoAPI",this.crypto=window.msCrypto),this.crypto||(this.mode="Failsafe",this.crypto=JenFailsafe)))):new Jen(t)}var _serverSide=!1;JenFailsafe.getRandomValues=function(t){t instanceof Uint8Array||(t=new Uint8Array(256));for(var e=0,r=0;r<t.length;r++){for(;;)if(e=Math.round(256*Math.random()),e>=0&&255>=e)break;t[r]=e}return t},Jen.prototype.engine=function(){return this.mode},Jen.prototype.fill=function(){1==_serverSide?this.dump=this.crypto.randomBytes(256):this.crypto.getRandomValues(this.dump)},Jen.prototype.randomBytes=function(t){if(0>=t&&(t=1),1==_serverSide)return this.crypto.randomBytes(t);var e=new Uint8Array(t);return this.crypto.getRandomValues(e),e},Jen.prototype.random=function(t){0>=t?t=4:t>2&&(t=4);var e=this.randomBytes(t);if(1==_serverSide)return 1==t?e.readUInt8(0):2==t?e.readUInt16LE(0):e.readUInt32LE(0);var r,n=new DataView(e.buffer);return r=1==t?n.getUint8(0):2==t?n.getUint16(0):n.getUint32(0)},Jen.prototype.hardening=function(t){this.hardened=!!t},Jen.prototype.password=function(t,e,r){var n=(new Date).getTime();r instanceof RegExp||(r=null),t=4>t?4:t,e=e>t?e:t;var o=0,i="",s=e;if(t!=e){s=0;for(var a=Math.ceil(Math.log(e)/Math.log(2)),d=Math.ceil(a/8),h=8*d;0==s;){var p=this.random(d)>>h-a;if(p>=t&&e>=p){s=p;break}}}for(o=0;s>o;){this.fill();for(var f=this.dump,m=0;m<f.length&&s>o;m++)f[m]>=48&&f[m]<=57||f[m]>=65&&f[m]<=90||f[m]>=97&&f[m]<=122?r?r.test(String.fromCharCode(f[m]))&&(i+=String.fromCharCode(f[m]),o++):(i+=String.fromCharCode(f[m]),o++):1==this.hardened&&(33==f[m]||35==f[m]||37==f[m]||40==f[m]&&f[m]<=47||58==f[m]&&f[m]<=64)&&(r?r.test(String.fromCharCode(f[m]))&&(i+=String.fromCharCode(f[m]),o++):(i+=String.fromCharCode(f[m]),o++))}return this.fill(),this._time=(new Date).getTime()-n,i},Jen.prototype.stats=function(){return this._time},"undefined"!=typeof module&&module.exports&&(_serverSide=!0,module.exports=Jen);

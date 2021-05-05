@@ -157,6 +157,7 @@ class APIs:
     def send_saved(uid):
         logins = {'logins': APIs.login_saved,
                   'categories': APIs.getCategories()}
+        print(APIs.login_saved)
         return logins
 
     def get_logins():

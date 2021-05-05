@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <title>Password Manager</title>
+
+  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/css/materialize.min.css" type="text/css" rel="stylesheet">
+  <link href="static/css/style.css" type="text/css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" href="static/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="static/images/favicon/android-chrome-192x192.png">
+  <link rel="manifest" href="static/images/favicon/manifest.json">
+  <link rel="mask-icon" href="static/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="static/images/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="static/images/favicon/mstile-144x144.png">
+  <meta name="msapplication-config" content="static/images/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body class="categories" data-mode="categories">
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#modal1" title="About" class="modal-trigger">About</a></li>
+    <li><a href="/edit">Edit Account</a></li>
+    <li class="divider"></li>
+    <li><a href="/">Sign Out</a></li>
+  </ul>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4 class="grey-text"><span class="blue-text text-lighten-1">Password</span><span
+          class="grey-text text-darken-1">Manager</span></h4>
+      <p>You can store any type of secret contents here. No one can see your data except yourself. Strong Encryptions
+        and hashes used for security.
+        You could access this data from anywhere at anytime with your password. For any reference or any improvements
+        required feel free to contact me through my website.
+      </p>
+      <ul>
+        <li><strong>Website:</strong> <a target="_blank" href="http://viswa2k.tk">viswa2k.tk</a></li>
+      </ul>
+      <p>Thank you,<br>
+        viswa2k</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">OK!</a>
+    </div>
+  </div>
+  <nav class="light-blue lighten-1" style="display:none">
+    <div class="nav-wrapper container"><a id="logo-container" href="/home"
+        class="brand-logo light-blue-text text-lighten-5"><span class="white-text">Password</span>Manager</a>
+      <ul class="right hide-on-med-and-down">
+        <li class=""><a href="/home">Logins</a></li>
+        <li class="active"><a href="/categories">Categories</a></li>
+        <!-- Dropdown Trigger -->
+        <li><a class="dropdown-button account-button" href="#!" data-activates="dropdown1"
+            title="Manage your account"><i class="material-icons left">account_circle</i>{{username}}<i
+              class="material-icons account-dropdown-icon">arrow_drop_down</i></a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse text-white right"><i
+          class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <ul id="nav-mobile" class="side-nav">
+
+    <li class=""><a href="/home">Logins</a></li>
+
+    <li class="active"><a href="/categories">Categories</a></li>
+
+    <li class="collapsible-parent">
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header"><i class="material-icons left">account_circle</i>Admin<i
+              class="material-icons right">arrow_drop_down</i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#modal1" title="About" class="modal-trigger">About</a></li>
+              <li><a href="/edit">Edit Account</a>
+              </li>
+              <li class="divider"></li>
+              <li><a href="/user/signout">Sign Out</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  {% block content %}{% endblock %}
+
+  <!-- Scripts -->
+  <script>
+    var baseUrl = "https://viswa2k.herokuapp.com";
+    var csrf = "omlbaq4mm8e6.12en251mdpetv";
+    var settings = { "language": "en", "session_timeout": "86400", "show_category_badge": "1", "force_ssl": "0", "enable_2_step_verification": "0", "enable_activity_log": "1", "show_last_edit": "1" };
+    // Store notification translation strings for JS
+    var language = {
+      notification_categories_delete_failed: 'Error: failed to delete categories',
+      notification_no_categories_found: 'Error: no categories found',
+      notification_login_saved: 'Login saved',
+      notification_login_save_failed: 'Error: failed to update login',
+      notification_fields_delete_failed: 'Error: failed to delete fields',
+      notification_copied: 'Copied to clipboard',
+      notification_definite_article: 'The',
+      notification_password_reminder: 'Make sure to store the password in a safe place before saving!',
+      notification_delete_account_confirm: 'Delete your account permanently?',
+      notification_account_saved: 'Account saved',
+      notification_settings_saved: 'Settings saved',
+      notification_negative: 'No',
+      notification_found_verb: 'found',
+      notification_no_logins: 'No logins found, get started by creating one!',
+      search_no_match: 'No matches',
+      search_for: 'for',
+      search_in: 'in',
+      notification_logins_load_failed: 'Failed to load logins.',
+      notification_categories_save_failed: 'Error: failed to update categories',
+      notification_categories_saved: 'Categories saved'
+    };
+  </script>
+  <!-- Include jQuery with local fallback -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>window.jQuery || document.write('<script src="static/js/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="static/js/materialize.min.js"></script>
+  <script src="static/js/velocity.min.js"></script>
+  <script src="static/js/velocity.ui.min.js"></script>
+  <script src="static/js/utils.js"></script>
+  <script src="static/js/jquery.fn.sortable.js"></script>
+  <script src="static/js/underscore.min.js"></script>
+  <script src="static/js/functions.js"></script>
+  <script src="static/js/main.js"></script>
+
+</body>
+
+</html>
